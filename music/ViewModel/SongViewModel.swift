@@ -11,9 +11,12 @@ import AVFoundation
 
 class SongViewModel: ObservableObject {
     @Published var songs: [Song] = []
-    @Published var searchText: String = "Justin Bieber"
+    @Published var searchText: String = ""
     @Published var isPlaying: Bool = false
     @Published var currentSong: Song?
+    @Published var isLoading: Bool = false
+    @Published var isFirstLaunch: Bool = true
+    @Published var noSongsFound: Bool = false
     
     private var cancellable = Set<AnyCancellable>()
     private let searchBaseUrl = "https://itunes.apple.com/search?term="
@@ -23,11 +26,16 @@ class SongViewModel: ObservableObject {
     
     init(session: URLSession = URLSession.shared) {
         self.session = session
-        fetchSong()
     }
     
     func fetchSong() {
-        guard let url = URL(string: searchBaseUrl + searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else { return }
+        guard let url = URL(string: searchBaseUrl + searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
+            print("Invalid URL")
+            return
+        }
+        
+        isLoading = true
+        noSongsFound = false
         
         session.dataTaskPublisher(for: url)
             .tryMap { data, response -> Data in
@@ -39,22 +47,31 @@ class SongViewModel: ObservableObject {
             .decode(type: SongResponse.self, decoder: JSONDecoder())
             .replaceError(with: SongResponse(results: []))
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
                     print("Finished successfully")
                 case .failure(let error):
                     print("Received error: \(error)")
                 }
+                self?.isLoading = false
             }, receiveValue: { [weak self] response in
                 print("Received response: \(response.results)")
                 self?.songs = response.results
+                self?.noSongsFound = response.results.isEmpty
+                self?.isFirstLaunch = false
             })
             .store(in: &cancellable)
     }
     
     func lookupSong(by id: Int) {
-        guard let url = URL(string: lookupBaseUrl + "\(id)") else { return }
+        guard let url = URL(string: lookupBaseUrl + "\(id)") else {
+            print("Invalid URL")
+            return
+        }
+        
+        isLoading = true
+        noSongsFound = false
         
         session.dataTaskPublisher(for: url)
             .tryMap { data, response -> Data in
@@ -66,16 +83,18 @@ class SongViewModel: ObservableObject {
             .decode(type: SongResponse.self, decoder: JSONDecoder())
             .replaceError(with: SongResponse(results: []))
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
                     print("Finished successfully")
                 case .failure(let error):
                     print("Received error: \(error)")
                 }
+                self?.isLoading = false
             }, receiveValue: { [weak self] response in
-                print("Received response: \(response.results)")
                 self?.songs = response.results
+                self?.noSongsFound = response.results.isEmpty
+                self?.isFirstLaunch = false
             })
             .store(in: &cancellable)
     }
@@ -104,6 +123,13 @@ class SongViewModel: ObservableObject {
         guard let currentSong = currentSong, let currentIndex = songs.firstIndex(where: { $0.id == currentSong.id }) else { return }
         let previousIndex = (currentIndex - 1 + songs.count) % songs.count
         playSong(songs[previousIndex])
+    }
+    
+    func clearSongs() {
+        songs.removeAll()
+        currentSong = nil
+        isFirstLaunch = true
+        noSongsFound = false
     }
 }
 

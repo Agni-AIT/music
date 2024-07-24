@@ -19,6 +19,7 @@ struct ClearableTextField: View {
             if !text.isEmpty {
                 Button(action: {
                     self.text = ""
+                    
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.gray)
