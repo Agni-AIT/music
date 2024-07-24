@@ -1,0 +1,32 @@
+name: iOS CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '14.3' # Change to your required Xcode version
+
+    - name: Install dependencies
+      run: |
+        gem install cocoapods
+        pod install
+      working-directory: ./music
+
+    - name: Build and test
+      run: xcodebuild -workspace YourProjectName.xcworkspace -scheme YourSchemeName -destination 'platform=iOS Simulator,name=iPhone 11' clean build test
+      working-directory: ./music
