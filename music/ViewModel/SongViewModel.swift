@@ -19,36 +19,64 @@ class SongViewModel: ObservableObject {
     private let searchBaseUrl = "https://itunes.apple.com/search?term="
     private let lookupBaseUrl = "https://itunes.apple.com/lookup?id="
     private var player: AVPlayer?
+    private var session: URLSession
     
-    init() {
+    init(session: URLSession = URLSession.shared) {
+        self.session = session
         fetchSong()
     }
     
     func fetchSong() {
         guard let url = URL(string: searchBaseUrl + searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else { return }
         
-        URLSession.shared.dataTaskPublisher(for:url)
-            .map { $0.data }
+        session.dataTaskPublisher(for: url)
+            .tryMap { data, response -> Data in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return data
+            }
             .decode(type: SongResponse.self, decoder: JSONDecoder())
             .replaceError(with: SongResponse(results: []))
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] response in
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    print("Finished successfully")
+                case .failure(let error):
+                    print("Received error: \(error)")
+                }
+            }, receiveValue: { [weak self] response in
+                print("Received response: \(response.results)")
                 self?.songs = response.results
-            }
+            })
             .store(in: &cancellable)
     }
     
     func lookupSong(by id: Int) {
         guard let url = URL(string: lookupBaseUrl + "\(id)") else { return }
         
-        URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
+        session.dataTaskPublisher(for: url)
+            .tryMap { data, response -> Data in
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                    throw URLError(.badServerResponse)
+                }
+                return data
+            }
             .decode(type: SongResponse.self, decoder: JSONDecoder())
             .replaceError(with: SongResponse(results: []))
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] response in
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    print("Finished successfully")
+                case .failure(let error):
+                    print("Received error: \(error)")
+                }
+            }, receiveValue: { [weak self] response in
+                print("Received response: \(response.results)")
                 self?.songs = response.results
-            }
+            })
             .store(in: &cancellable)
     }
     
