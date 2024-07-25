@@ -100,12 +100,20 @@ class SongViewModel: ObservableObject {
     }
     
     func playSong(_ song: Song) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio session category: \(error.localizedDescription)")
+        }
+        
         if let url = URL(string: song.previewUrl ?? "") {
             player = AVPlayer(url: url)
             player?.play()
             currentSong = song
             isPlaying = true
         }
+       
     }
     
     func pauseSong() {
