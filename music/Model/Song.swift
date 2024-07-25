@@ -9,9 +9,9 @@ import Foundation
 
 struct Song: Identifiable, Decodable {
     let id: Int
-    let artistName: String
+    let artistName: String?
     let collectionName: String?
-    let trackName: String
+    let trackName: String?
     let previewUrl: String?
     let artworkUrl60: String?
     
