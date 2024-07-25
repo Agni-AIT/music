@@ -14,6 +14,8 @@ struct ContentView: View {
     var body: some View {
         VStack {
             VStack {
+                Text("Music Apps")
+                    .font(.title)
                 // Search bar
                 ClearableTextField(
                     text: $viewModel.searchText,
@@ -26,21 +28,6 @@ struct ContentView: View {
                         }
                     }
                 )
-                
-                // Lookup bar
-                HStack {
-                    TextField("Lookup by iTunes ID", text: $lookupId)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    Button("Lookup") {
-                        if lookupId.isEmpty {
-                            viewModel.clearSongs()
-                        } else if let id = Int(lookupId) {
-                            viewModel.lookupSong(by: id)
-                        }
-                    }
-                    .padding(.leading, 5)
-                }
-                .padding(.horizontal)
             }
             .padding(.top)
             

@@ -17,7 +17,6 @@
 		D531D0222C50822700E88636 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0212C50822700E88636 /* Song.swift */; };
 		D531D0242C50823A00E88636 /* SongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0232C50823A00E88636 /* SongViewModel.swift */; };
 		D531D0262C508BD700E88636 /* ClearableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0252C508BD700E88636 /* ClearableTextField.swift */; };
-		D531D0602C50D5DD00E88636 /* SongViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D05F2C50D5DD00E88636 /* SongViewModelTests.swift */; };
 		D531D0622C51DB9400E88636 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0612C51DB9400E88636 /* SplashView.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +52,6 @@
 		D531D0212C50822700E88636 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D531D0232C50823A00E88636 /* SongViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewModel.swift; sourceTree = "<group>"; };
 		D531D0252C508BD700E88636 /* ClearableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearableTextField.swift; sourceTree = "<group>"; };
-		D531D05F2C50D5DD00E88636 /* SongViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewModelTests.swift; sourceTree = "<group>"; };
 		D531D0612C51DB9400E88636 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,7 +126,6 @@
 			isa = PBXGroup;
 			children = (
 				D531D0052C5080FB00E88636 /* musicTests.swift */,
-				D531D05F2C50D5DD00E88636 /* SongViewModelTests.swift */,
 			);
 			path = musicTests;
 			sourceTree = "<group>";
@@ -312,7 +309,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D531D0062C5080FB00E88636 /* musicTests.swift in Sources */,
-				D531D0602C50D5DD00E88636 /* SongViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

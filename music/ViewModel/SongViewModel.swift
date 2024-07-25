@@ -20,7 +20,6 @@ class SongViewModel: ObservableObject {
     
     private var cancellable = Set<AnyCancellable>()
     private let searchBaseUrl = "https://itunes.apple.com/search?term="
-    private let lookupBaseUrl = "https://itunes.apple.com/lookup?id="
     private var player: AVPlayer?
     private var session: URLSession
     
@@ -45,53 +44,19 @@ class SongViewModel: ObservableObject {
                 return data
             }
             .decode(type: SongResponse.self, decoder: JSONDecoder())
-            .replaceError(with: SongResponse(results: []))
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
-                    print("Finished successfully")
+                    print("Combine pipeline finished successfully")
                 case .failure(let error):
                     print("Received error: \(error)")
+                    self?.songs = []
+                    self?.noSongsFound = true
                 }
                 self?.isLoading = false
             }, receiveValue: { [weak self] response in
                 print("Received response: \(response.results)")
-                self?.songs = response.results
-                self?.noSongsFound = response.results.isEmpty
-                self?.isFirstLaunch = false
-            })
-            .store(in: &cancellable)
-    }
-    
-    func lookupSong(by id: Int) {
-        guard let url = URL(string: lookupBaseUrl + "\(id)") else {
-            print("Invalid URL")
-            return
-        }
-        
-        isLoading = true
-        noSongsFound = false
-        
-        session.dataTaskPublisher(for: url)
-            .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
-                }
-                return data
-            }
-            .decode(type: SongResponse.self, decoder: JSONDecoder())
-            .replaceError(with: SongResponse(results: []))
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    print("Finished successfully")
-                case .failure(let error):
-                    print("Received error: \(error)")
-                }
-                self?.isLoading = false
-            }, receiveValue: { [weak self] response in
                 self?.songs = response.results
                 self?.noSongsFound = response.results.isEmpty
                 self?.isFirstLaunch = false
@@ -113,7 +78,6 @@ class SongViewModel: ObservableObject {
             currentSong = song
             isPlaying = true
         }
-       
     }
     
     func pauseSong() {
@@ -136,6 +100,7 @@ class SongViewModel: ObservableObject {
     func clearSongs() {
         songs.removeAll()
         currentSong = nil
+        isPlaying = false
         isFirstLaunch = true
         noSongsFound = false
     }
@@ -144,3 +109,4 @@ class SongViewModel: ObservableObject {
 struct SongResponse: Decodable {
     let results: [Song]
 }
+
