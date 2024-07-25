@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D531CFEF2C5080F700E88636"
-               BuildableName = "AIT Music.app"
+               BuildableName = "AIT_Music.app"
                BlueprintName = "music"
                ReferencedContainer = "container:music.xcodeproj">
             </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D531CFEF2C5080F700E88636"
-            BuildableName = "AIT Music.app"
+            BuildableName = "AIT_Music.app"
             BlueprintName = "music"
             ReferencedContainer = "container:music.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D531CFEF2C5080F700E88636"
-            BuildableName = "AIT Music.app"
+            BuildableName = "AIT_Music.app"
             BlueprintName = "music"
             ReferencedContainer = "container:music.xcodeproj">
          </BuildableReference>
