@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import music
+@testable import AIT_Music
 
 class SongTests: XCTestCase {
 
