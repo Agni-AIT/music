@@ -51,6 +51,9 @@ struct ContentView: View {
                 if viewModel.isFirstLaunch {
                     VStack {
                         Spacer()
+                        Image(systemName: "music.note.list")
+                            .font(.largeTitle)
+                            .foregroundColor(.blue)
                         Text("Welcome! Please search for a song or artist.")
                             .padding()
                         Spacer()
