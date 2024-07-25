@@ -19,7 +19,7 @@ class SongViewModel: ObservableObject {
     @Published var noSongsFound: Bool = false
     
     private var cancellable = Set<AnyCancellable>()
-    private let searchBaseUrl = "https://itunes.apple.com/search?term="
+    private let searchBaseUrl = "https://itunes.apple.com/search?media=music&country=ID&term=%22"
     private var player: AVPlayer?
     private var session: URLSession
     
