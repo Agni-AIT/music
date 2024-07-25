@@ -38,7 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D531CFF02C5080F700E88636 /* music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = music.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D531CFF02C5080F700E88636 /* AIT Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AIT Music.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D531CFF32C5080F700E88636 /* musicApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = musicApp.swift; sourceTree = "<group>"; };
 		D531CFF52C5080F700E88636 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D531CFF72C5080FA00E88636 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		D531CFF12C5080F700E88636 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D531CFF02C5080F700E88636 /* music.app */,
+				D531CFF02C5080F700E88636 /* AIT Music.app */,
 				D531D0012C5080FB00E88636 /* musicTests.xctest */,
 				D531D00B2C5080FB00E88636 /* musicUITests.xctest */,
 			);
@@ -184,7 +184,7 @@
 			);
 			name = music;
 			productName = music;
-			productReference = D531CFF02C5080F700E88636 /* music.app */;
+			productReference = D531CFF02C5080F700E88636 /* AIT Music.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D531D0002C5080FB00E88636 /* musicTests */ = {
@@ -469,6 +469,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = music/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "AIT Music";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -485,7 +486,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ait.bcad.test.ios.music;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "AIT Music";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -508,6 +509,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = music/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "AIT Music";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -524,7 +526,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ait.bcad.test.ios.music;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "AIT Music";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
