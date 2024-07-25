@@ -56,8 +56,8 @@ struct ContentView: View {
                     List(viewModel.songs) { song in
                         HStack {
                             VStack(alignment: .leading) {
-                                Text(song.trackName)
-                                Text(song.artistName)
+                                Text(song.trackName ?? "")
+                                Text(song.artistName ?? "")
                                 if let collectionName = song.collectionName {
                                     Text(collectionName)
                                 }
