@@ -10,6 +10,12 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = SongViewModel()
     @State private var lookupId: String = ""
+    @State private var songs: [Song] = []
+    @State private var isPlaying: Bool = false
+    @State private var currentSong: Song?
+    @State private var isLoading: Bool = false
+    @State private var isFirstLaunch: Bool = true
+    @State private var noSongsFound: Bool = false
     
     var body: some View {
         VStack {

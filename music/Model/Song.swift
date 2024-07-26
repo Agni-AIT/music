@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Song: Identifiable, Decodable {
+struct Song: Identifiable, Decodable,Equatable {
     let id: Int
     let artistName: String?
     let collectionName: String?

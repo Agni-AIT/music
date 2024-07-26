@@ -9,59 +9,78 @@ import Foundation
 import Combine
 import AVFoundation
 
+import Foundation
+import Combine
+import AVFoundation
+
+protocol SongViewModelDelegate: AnyObject {
+    func viewModelDidUpdateSongs(_ viewModel: SongViewModel)
+    func viewModelDidUpdatePlayingState(_ viewModel: SongViewModel)
+    func viewModelDidUpdateLoadingState(_ viewModel: SongViewModel)
+    func viewModelDidEncounterError(_ viewModel: SongViewModel, error: Error)
+    func viewModelDidStartPlayingMusic(_ viewModel: SongViewModel)
+    func viewModelDidUpdateCurrentSong(_ viewModel: SongViewModel)
+}
+
 class SongViewModel: ObservableObject {
+    weak var delegate: SongViewModelDelegate?
+    
     @Published var songs: [Song] = []
-    @Published var searchText: String = ""
-    @Published var isPlaying: Bool = false
-    @Published var currentSong: Song?
-    @Published var isLoading: Bool = false
+    @Published var searchText: String = "" {
+        didSet {
+            session.setTerm(searchText)
+        }
+    }
+    @Published var isPlaying: Bool = false {
+        didSet {
+            delegate?.viewModelDidUpdatePlayingState(self)
+        }
+    }
+    @Published var currentSong: Song? {
+        didSet {
+            delegate?.viewModelDidUpdateCurrentSong(self)
+        }
+    }
+    @Published var isLoading: Bool = false {
+        didSet {
+            delegate?.viewModelDidUpdateLoadingState(self)
+        }
+    }
     @Published var isFirstLaunch: Bool = true
     @Published var noSongsFound: Bool = false
     
     private var cancellable = Set<AnyCancellable>()
-    private let searchBaseUrl = "https://itunes.apple.com/search?media=music&country=ID&term=%22"
     private var player: AVPlayer?
-    private var session: URLSession
+    public var session: APIService
     
-    init(session: URLSession = URLSession.shared) {
+    init(session: APIService = APIService(networkingService: SongsNetworkService())) {
         self.session = session
+        self.session.setTerm(searchText)
     }
     
     func fetchSong() {
-        guard let url = URL(string: searchBaseUrl + searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else {
-            print("Invalid URL")
-            return
-        }
-        
         isLoading = true
-        noSongsFound = false
         
-        session.dataTaskPublisher(for: url)
-            .tryMap { data, response -> Data in
-                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                    throw URLError(.badServerResponse)
-                }
-                return data
-            }
-            .decode(type: SongResponse.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    print("Combine pipeline finished successfully")
+        session.searchSongs(term: searchText) { [weak self] (result: Result<[Song], Error>) in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.isLoading = false
+                self.noSongsFound = false
+                self.isFirstLaunch = false
+                
+                switch result {
+                case .success(let songs):
+                    self.songs = songs
+                    self.delegate?.viewModelDidUpdateSongs(self)
                 case .failure(let error):
-                    print("Received error: \(error)")
-                    self?.songs = []
-                    self?.noSongsFound = true
+                    self.songs = []
+                    self.noSongsFound = true
+                    self.delegate?.viewModelDidEncounterError(self, error: error)
                 }
-                self?.isLoading = false
-            }, receiveValue: { [weak self] response in
-                print("Received response: \(response.results)")
-                self?.songs = response.results
-                self?.noSongsFound = response.results.isEmpty
-                self?.isFirstLaunch = false
-            })
-            .store(in: &cancellable)
+            }
+        }
     }
     
     func playSong(_ song: Song) {
@@ -77,6 +96,11 @@ class SongViewModel: ObservableObject {
             player?.play()
             currentSong = song
             isPlaying = true
+            delegate?.viewModelDidStartPlayingMusic(self)
+        } else {
+            currentSong = song
+            isPlaying = true
+            delegate?.viewModelDidStartPlayingMusic(self)
         }
     }
     
@@ -109,4 +133,3 @@ class SongViewModel: ObservableObject {
 struct SongResponse: Decodable {
     let results: [Song]
 }
-

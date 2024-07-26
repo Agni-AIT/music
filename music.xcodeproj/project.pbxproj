@@ -16,6 +16,10 @@
 		D531D0242C50823A00E88636 /* SongViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0232C50823A00E88636 /* SongViewModel.swift */; };
 		D531D0262C508BD700E88636 /* ClearableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0252C508BD700E88636 /* ClearableTextField.swift */; };
 		D531D0622C51DB9400E88636 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D531D0612C51DB9400E88636 /* SplashView.swift */; };
+		D56B6AD52C527323002ECCA1 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B6AD42C527323002ECCA1 /* APIService.swift */; };
+		D56B6AD72C527EC4002ECCA1 /* SongViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B6AD62C527EC4002ECCA1 /* SongViewModelTests.swift */; };
+		D56B6ADB2C533103002ECCA1 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B6ADA2C533103002ECCA1 /* APIError.swift */; };
+		D56B6ADD2C533124002ECCA1 /* SongNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B6ADC2C533124002ECCA1 /* SongNetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +46,10 @@
 		D531D0252C508BD700E88636 /* ClearableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearableTextField.swift; sourceTree = "<group>"; };
 		D531D0612C51DB9400E88636 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		D531D0632C52428900E88636 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D56B6AD42C527323002ECCA1 /* APIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		D56B6AD62C527EC4002ECCA1 /* SongViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewModelTests.swift; sourceTree = "<group>"; };
+		D56B6ADA2C533103002ECCA1 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		D56B6ADC2C533124002ECCA1 /* SongNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongNetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,7 @@
 		D531CFF22C5080F700E88636 /* music */ = {
 			isa = PBXGroup;
 			children = (
+				D56B6AD92C5330CB002ECCA1 /* APIService */,
 				D531D0632C52428900E88636 /* Info.plist */,
 				D531D0202C5081FB00E88636 /* Model */,
 				D531D01F2C5081F300E88636 /* ViewModel */,
@@ -107,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				D531D0052C5080FB00E88636 /* AIT_MusicTests.swift */,
+				D56B6AD62C527EC4002ECCA1 /* SongViewModelTests.swift */,
 			);
 			path = AITMusicTests;
 			sourceTree = "<group>";
@@ -135,6 +145,16 @@
 				D531D0212C50822700E88636 /* Song.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D56B6AD92C5330CB002ECCA1 /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+				D56B6AD42C527323002ECCA1 /* APIService.swift */,
+				D56B6ADA2C533103002ECCA1 /* APIError.swift */,
+				D56B6ADC2C533124002ECCA1 /* SongNetworkService.swift */,
+			);
+			path = APIService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,9 +258,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D531D0222C50822700E88636 /* Song.swift in Sources */,
+				D56B6AD52C527323002ECCA1 /* APIService.swift in Sources */,
 				D531D0242C50823A00E88636 /* SongViewModel.swift in Sources */,
+				D56B6ADD2C533124002ECCA1 /* SongNetworkService.swift in Sources */,
 				D531CFF62C5080F700E88636 /* ContentView.swift in Sources */,
 				D531CFF42C5080F700E88636 /* musicApp.swift in Sources */,
+				D56B6ADB2C533103002ECCA1 /* APIError.swift in Sources */,
 				D531D0262C508BD700E88636 /* ClearableTextField.swift in Sources */,
 				D531D0622C51DB9400E88636 /* SplashView.swift in Sources */,
 			);
@@ -251,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D531D0062C5080FB00E88636 /* AIT_MusicTests.swift in Sources */,
+				D56B6AD72C527EC4002ECCA1 /* SongViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
